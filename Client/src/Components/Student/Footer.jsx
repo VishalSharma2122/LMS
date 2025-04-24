@@ -5,7 +5,7 @@ import { AppContext } from "@/Context/AppContext";
 import { useUser } from "@clerk/clerk-react";
 
 function Footer() {
-  const navigate = useContext(AppContext);
+  const {navigate} = useContext(AppContext);
   const user = useUser();
 
   return (

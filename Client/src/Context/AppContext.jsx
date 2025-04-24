@@ -1,7 +1,6 @@
 import { dummyCourses } from "@/assets/assets";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rating } from "react-simple-star-rating";
 
 export const AppContext = createContext();
 
