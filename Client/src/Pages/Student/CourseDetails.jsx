@@ -18,7 +18,15 @@ function CourseDetails() {
   } = useContext(AppContext);
 
   const fetchCourseData = async () => {
+    if (!allCourses || allCourses.length === 0) {
+      console.error("allCourses is not loaded or empty.");
+      return;
+    }
     const findCourse = allCourses.find((course) => course._id === id);
+    if (!findCourse) {
+      console.error(`Course with id ${id} not found.`);
+      return;
+    }
     setCourseData(findCourse);
   };
 
@@ -26,13 +34,16 @@ function CourseDetails() {
     fetchCourseData();
   }, [allCourses]);
 
-const toggleSection = () => {
-  
-}
+  const toggleSection = (index) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return courseData ? (
     <>
-      <div className="flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36 px-8 pt-20 text-left bg-gradient-to-b from-cyan-100/70">
+      <div className="flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36 px-8 pt-20 pb-20 text-left bg-gradient-to-b from-cyan-100/70">
         <div className="absolute top-0 left-0 w-full h-section-height -z-10 bg-gradient-to-b from-cyan-100/70"></div>
 
         {/* Left Column */}
@@ -82,9 +93,12 @@ const toggleSection = () => {
                   key={index}
                   className=" border border-gray-300 bg-white mb-2 rounded"
                 >
-                  <div className="flex items-center justify-between px-4 py-3 cursor-pointer select-none">
+                  <div
+                    className="flex items-center justify-between px-4 py-3 cursor-pointer select-none "
+                    onClick={() => toggleSection(index)}
+                  >
                     <div className="flex items-center gap-2">
-                      <img src={assets.down_arrow_icon} alt="arroe icon" />
+                      <img className={`transform transition-transform ${openSection [index] ?'rotate-180' : ''} `} src={assets.down_arrow_icon} alt="arroe icon" />
                       <p className="font-medium md:text-base text-sm">
                         {chapter.chapterTitle}
                       </p>
@@ -94,7 +108,11 @@ const toggleSection = () => {
                       {calculateChapterTime(chapter)}
                     </p>
                   </div>
-                  <div className="overflow-hidden transition-all duration-300 max-h-96">
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      openSection[index] ? "max-h-96" : "max-h-0"
+                    }`}
+                  >
                     <ul className="list-disc md:pl-10 pl-4 pr-4 py-2 text-gray-600 border-t border-gray-300 ">
                       {chapter.chapterContent.map((lecture, i) => (
                         <li key={i} className="flex items-start gap-2 py-1">
