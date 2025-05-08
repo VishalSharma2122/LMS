@@ -14,7 +14,8 @@ function CourseDetails() {
     calculateRating,
     calculateChapterTime,
     calculateCourseDuration,
-    calculateNoOfLecture,
+    calculateNoOfLecture, 
+    currency,
   } = useContext(AppContext);
 
   const fetchCourseData = async () => {
@@ -38,7 +39,7 @@ function CourseDetails() {
     setOpenSections((prev) => ({
       ...prev,
       [index]: !prev[index],
-    }));
+    }));    
   };
 
   return courseData ? (
@@ -52,7 +53,9 @@ function CourseDetails() {
             {courseData.courseTitle}
           </h1>
           <p
-            dangerouslySetInnerHTML={{ __html: courseData.courseDescription }}
+            dangerouslySetInnerHTML={{
+              __html: courseData.courseDescription.slice(0, 200),
+            }}
             className="pt-4 md:text-base text-sm"
           ></p>
           {/* review nad rating */}
@@ -98,7 +101,13 @@ function CourseDetails() {
                     onClick={() => toggleSection(index)}
                   >
                     <div className="flex items-center gap-2">
-                      <img className={`transform transition-transform ${openSection [index] ?'rotate-180' : ''} `} src={assets.down_arrow_icon} alt="arroe icon" />
+                      <img
+                        className={`transform transition-transform ${
+                          openSection[index] ? "rotate-180" : ""
+                        } `}
+                        src={assets.down_arrow_icon}
+                        alt="arroe icon"
+                      />
                       <p className="font-medium md:text-base text-sm">
                         {chapter.chapterTitle}
                       </p>
@@ -144,11 +153,38 @@ function CourseDetails() {
                 </div>
               ))}
             </div>
+            <div className="py-20  text-sm md:text-default">
+              <h3 className="text-xl font-semibold text-gray-800">
+                Course Description
+              </h3>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: courseData.courseDescription,
+                }}
+                className="pt-3 rich-text "
+              ></p>
+            </div>
           </div>
         </div>
 
         {/* Right Column */}
-        <div></div>
+        <div className=" max-w-course-card z-10 shadow-custom-card rounded-t md:rounded-none bg-white min-w-[30px] sm:min-w-[420px] ">
+          <img src={courseData.courseThumbnail} alt="Thumbnail" />
+          <div className="p-5 ">
+            <div className="flex items-center gap-2 ">
+              <img
+                className="w-3.5"
+                src={assets.time_left_clock_icon}
+                alt=" tijme left icon"
+              />
+              <p className=" text-red-500"> <span className="font-medium ">5 days</span> left at this price
+              </p>
+            </div>
+            <div>
+              <p></p>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   ) : (
