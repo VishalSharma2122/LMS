@@ -191,9 +191,8 @@ function CourseDetails() {
                 />
               ) : (
                 <img
-                  className="w-3.5"
-                  src={assets.time_left_clock_icon}
-                  alt=" tijme left icon"
+                  src={courseData.courseThumbnail}
+                  alt=" Thumbnail"
                 />
           )}
           <div className="p-5 ">
@@ -209,7 +208,7 @@ function CourseDetails() {
               </p>
             </div>
             <div className="flex items-center gap-3 pt-2">
-              <p className="text-gray-800 md: text-4xl text-2xl font-semibold">
+              <p className="text-gray-800 md:text-4xl text-2xl font-semibold">
                 {currency}
                 {(
                   courseData.coursePrice -
