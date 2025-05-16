@@ -1,6 +1,7 @@
 import { AppContext } from "@/Context/AppContext";
 import React, { useContext,useState } from "react";
 import { Line } from "rc-progress";
+import Footer from "@/Components/Student/Footer";
 
 function MyEnrollments() {
   const { enrolledCourses, calculateCourseDuration,navigate } = useContext(AppContext);
@@ -65,6 +66,7 @@ function MyEnrollments() {
           </table>
         </h1>
       </div>
+      <Footer/>
     </>
   );
 }
